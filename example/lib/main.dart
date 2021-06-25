@@ -3744,7 +3744,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    initPlatformState();
+    // initPlatformState();
   }
 
   // Platform messages are asynchronous, so we initialize in an async method.
@@ -3769,45 +3769,53 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
+  late String _currentData = '';
+
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
-        appBar: AppBar(
-          title: const Text('Plugin example app'),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Plugin example app'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextButton(
+              onPressed: () {
+                ContactorPicker.showPicker(
+                  context,
+                  dataList: cityList.map((element) {
+                    String pinyin = PinyinHelper.getPinyinE(element['name'],
+                        separator: " ",
+                        defPinyin: '#',
+                        format: PinyinFormat.WITHOUT_TONE);
+                    return ContactorDataListData(
+                      name: element['name'],
+                      id: int.tryParse(element['zip']),
+                      groupCode: pinyin,
+                      code: element['label']
+                    );
+                  }).toList(),
+                  title: '地址簿',
+                  backgroundColor: Color(0xFFFAFAFA),
+                  letterSelectedColor: Colors.blueAccent,
+                  onSelectedData: (data) {
+                    print(data.toJson());
+                    _currentData = data.toJson().toString();
+                    setState(() {});
+                  },
+                );
+              },
+              child: Text('地址簿'),
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 30),
+              child: Text('currentData: $_currentData\n'),
+            ),
+          ],
         ),
-        body: Center(
-          child: Column(
-            children: [
-              Text('Running on: $_platformVersion\n'),
-              TextButton(
-                onPressed: () {
-                  ContactorPicker.showPicker(
-                    context,
-                    dataList: cityList.map((element) {
-                      String pinyin = PinyinHelper.getPinyinE(element['name'],
-                          separator: " ",
-                          defPinyin: '#',
-                          format: PinyinFormat.WITHOUT_TONE);
-                      return ContactorDataListData(
-                        name: element['name'],
-                        id: int.tryParse(element['zip']),
-                        groupCode: pinyin,
-                      );
-                    }).toList(),
-                    title: '联系人',
-                    backgroundColor: Color(0xFFFAFAFA),
-                    letterSelectedColor: Colors.blueAccent,
-                    onSelectedData: (data) {
-                      print(data.toJson());
-                    },
-                  );
-                },
-                child: Text('通讯录'),
-              ),
-            ],
-          ),
-        ),
-      )
-    ;
+      ),
+    );
   }
 }
