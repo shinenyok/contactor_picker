@@ -13,6 +13,7 @@ class SearchBarView extends StatelessWidget {
   final bool readOnly;
   final FocusNode? focusNode;
   final Function(String)? onChanged;
+  final EdgeInsets? padding;
   const SearchBarView({
     Key? key,
     this.onTap,
@@ -21,6 +22,7 @@ class SearchBarView extends StatelessWidget {
     this.readOnly = false,
     this.onChanged,
     this.focusNode,
+    this.padding,
   }) : super(key: key);
 
   OutlineInputBorder get _border => OutlineInputBorder(
@@ -35,7 +37,7 @@ class SearchBarView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 40,
-      margin: EdgeInsets.symmetric(horizontal: 20),
+      margin: padding,
       child: TextField(
         focusNode: focusNode,
         maxLines: 1,
@@ -48,7 +50,7 @@ class SearchBarView extends StatelessWidget {
           filled: true,
           isDense: true,
           contentPadding: EdgeInsets.zero,
-          hintText: placeholder ?? '搜索员工',
+          hintText: placeholder ?? '搜索',
           focusedBorder: _border,
           enabledBorder: _border,
         ),

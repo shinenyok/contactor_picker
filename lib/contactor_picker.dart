@@ -10,7 +10,6 @@ export 'package:contactor_picker/model/contactor_model.dart';
 export 'package:lpinyin/lpinyin.dart';
 
 class ContactorPicker {
-
   static const MethodChannel _channel = const MethodChannel('contactor_picker');
 
   static Future<String?> get platformVersion async {
@@ -20,6 +19,9 @@ class ContactorPicker {
 
   static showPicker(
     BuildContext context, {
+    String? title,
+    Color? backgroundColor,
+    Color? letterSelectedColor,
     required List<ContactorDataListData> dataList,
     required Function(ContactorDataListData) onSelectedData,
   }) {
@@ -28,6 +30,9 @@ class ContactorPicker {
       MaterialPageRoute(
         builder: (context) {
           return ContactorView(
+            title: title ?? '联系人',
+            backgroundColor: backgroundColor ?? Color(0xFFFAFAFA),
+            letterSelectedColor: letterSelectedColor,
             onSelectedData: onSelectedData,
             dataList: dataList,
           );

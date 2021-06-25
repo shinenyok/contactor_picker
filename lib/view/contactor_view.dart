@@ -4,7 +4,6 @@
  * @description: flutter
  */
 
-
 import 'package:contactor_picker/model/contactor_model.dart';
 import 'package:flutter/material.dart';
 import 'package:lpinyin/lpinyin.dart';
@@ -18,11 +17,17 @@ import 'search_bar_view.dart';
 class ContactorView extends StatefulWidget {
   final Function(ContactorDataListData) onSelectedData;
   final List<ContactorDataListData> dataList;
+  final String title;
+  final Color? letterSelectedColor;
+  final Color backgroundColor;
 
   const ContactorView({
     Key? key,
     required this.onSelectedData,
     required this.dataList,
+    this.title = '选择联系人',
+    this.letterSelectedColor,
+    this.backgroundColor = const Color(0xFFFAFAFA),
   }) : super(key: key);
 
   @override
@@ -72,10 +77,10 @@ class _ContactorViewState extends State<ContactorView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('选择员工'),
+        title: Text(widget.title),
         centerTitle: true,
       ),
-      backgroundColor: Colors.white,
+      backgroundColor: widget.backgroundColor,
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
@@ -85,6 +90,7 @@ class _ContactorViewState extends State<ContactorView> {
                 height: 10,
               ),
               SearchBarView(
+                padding: EdgeInsets.symmetric(horizontal: 20),
                 readOnly: true,
                 onTap: () {
                   Navigator.push(
@@ -154,13 +160,15 @@ class _ContactorViewState extends State<ContactorView> {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 0),
       height: 45,
-      color: Colors.white,
+      color: widget.backgroundColor,
       alignment: Alignment.centerLeft,
       child: Text(
         data![index].name.toUpperCase(),
         style: TextStyle(
           fontSize: 20,
-          color: _currentIndex == index ? Colors.blueAccent : Color(0xff434343),
+          color: _currentIndex == index
+              ? (widget.letterSelectedColor ?? Colors.blueAccent)
+              : Color(0xff434343),
         ),
       ),
     );
@@ -194,7 +202,7 @@ class _ContactorViewState extends State<ContactorView> {
                   e,
                   style: TextStyle(
                     color: _currentIndex == index
-                        ? Colors.blueAccent
+                        ? (widget.letterSelectedColor ?? Colors.blueAccent)
                         : Color(0xff434343),
                   ),
                 ),

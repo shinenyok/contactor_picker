@@ -3794,6 +3794,9 @@ class _MyAppState extends State<MyApp> {
                         groupCode: pinyin,
                       );
                     }).toList(),
+                    title: '联系人',
+                    backgroundColor: Color(0xFFFAFAFA),
+                    letterSelectedColor: Colors.blueAccent,
                     onSelectedData: (data) {
                       print(data.toJson());
                     },

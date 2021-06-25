@@ -1,22 +1,9 @@
 # contactor_picker
 
-A new Flutter project.
+联系人选择器
 
 ## Getting Started
 
-This project is a starting point for a Flutter
-[plug-in package](https://flutter.dev/developing-packages/),
-a specialized package that includes platform-specific implementation code for
-Android and/or iOS.
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-
-### contactor_picker
-联系人选择器
-
-## 使用方法
 ```
 ContactorPicker.showPicker(
                     context,
@@ -26,5 +13,11 @@ ContactorPicker.showPicker(
                     onSelectedData: (data) {
 
                     },
+                    ///标题
+                    title: '联系人',
+                    ///页面背景色
+                    backgroundColor: Color(0xFFFAFAFA),
+                    ///当前字母颜色
+                    letterSelectedColor: Colors.blueAccent,
                   );
 ```
