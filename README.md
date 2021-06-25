@@ -21,5 +21,6 @@ ContactorPicker.showPicker(
                     letterSelectedColor: Colors.blueAccent,
                   );
 ```
-#预览
-![image](https://shineyoki.oss-cn-beijing.aliyuncs.com/Wondershare UniConverter_000002.GIF?versionId=CAEQBBiBgIDxlfyJ0hciIDVlZGY5M2M5NDU1MzQ3YWY4OGIxMjEwZDU4MmFjMTE2)
+## 预览
+
+![image](https://shineyoki.oss-cn-beijing.aliyuncs.com/3.gif)
