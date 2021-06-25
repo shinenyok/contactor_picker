@@ -10,9 +10,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  lpinyin: 2.0.3
-  sticky_headers: 0.2.0
-  visibility_detector: 0.2.0
+  lpinyin: ^2.0.3
+  sticky_headers: ^0.2.0
+  visibility_detector: ^0.2.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
