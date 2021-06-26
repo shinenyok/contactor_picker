@@ -14,6 +14,7 @@ class ContactorSearchView extends StatefulWidget {
   final List<ContactorDataListData> listData;
   final Function(ContactorDataListData) onSelectedData;
   final Color backgroundColor;
+
   ContactorSearchView({
     Key? key,
     required this.listData,

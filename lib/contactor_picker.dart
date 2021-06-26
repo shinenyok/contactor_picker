@@ -10,13 +10,6 @@ export 'package:contactor_picker/model/contactor_model.dart';
 export 'package:lpinyin/lpinyin.dart';
 
 class ContactorPicker {
-  static const MethodChannel _channel = const MethodChannel('contactor_picker');
-
-  static Future<String?> get platformVersion async {
-    final String? version = await _channel.invokeMethod('getPlatformVersion');
-    return version;
-  }
-
   static showPicker(
     BuildContext context, {
     String? title,

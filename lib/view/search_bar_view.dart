@@ -14,6 +14,7 @@ class SearchBarView extends StatelessWidget {
   final FocusNode? focusNode;
   final Function(String)? onChanged;
   final EdgeInsets? padding;
+
   const SearchBarView({
     Key? key,
     this.onTap,
@@ -26,12 +27,12 @@ class SearchBarView extends StatelessWidget {
   }) : super(key: key);
 
   OutlineInputBorder get _border => OutlineInputBorder(
-    /*边角*/
-    borderRadius: BorderRadius.all(
-      Radius.circular(20), //边角为5
-    ),
-    borderSide: BorderSide.none,
-  );
+        /*边角*/
+        borderRadius: BorderRadius.all(
+          Radius.circular(20), //边角为5
+        ),
+        borderSide: BorderSide.none,
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -54,16 +55,14 @@ class SearchBarView extends StatelessWidget {
           focusedBorder: _border,
           enabledBorder: _border,
         ),
-        onTap: (){
+        onTap: () {
           onTap?.call();
         },
-        onChanged: (value){
+        onChanged: (value) {
           onChanged?.call(value);
         },
         readOnly: readOnly,
       ),
     );
   }
-
-
 }

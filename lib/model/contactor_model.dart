@@ -57,4 +57,3 @@ class ContactorDataListData {
     return data;
   }
 }
-

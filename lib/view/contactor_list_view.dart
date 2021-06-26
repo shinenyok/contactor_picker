@@ -12,6 +12,7 @@ class ContactorListView extends StatelessWidget {
   final Function(ContactorDataListData) onSelectedData;
   final bool shrinkWrap;
   final bool scrollEnabled;
+
   const ContactorListView({
     Key? key,
     required this.dataList,

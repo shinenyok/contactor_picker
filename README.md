@@ -23,4 +23,4 @@ ContactorPicker.showPicker(
 ```
 ## 预览
 
-![image](https://shineyoki.oss-cn-beijing.aliyuncs.com/3.gif)
+![image](https://shineyoki.oss-cn-beijing.aliyuncs.com/demo.gif)
