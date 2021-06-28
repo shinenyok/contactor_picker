@@ -1,3 +1,3 @@
-## 0.0.3
+## 0.0.4
 
-* code refine
+* provide only search view and add more style to adjust

@@ -20,13 +20,14 @@ class ContactorView extends StatefulWidget {
   final String title;
   final Color? letterSelectedColor;
   final Color backgroundColor;
-
+  final bool? showGroupCode;
   const ContactorView({
     Key? key,
     required this.onSelectedData,
     required this.dataList,
     this.title = '选择联系人',
     this.letterSelectedColor,
+    this.showGroupCode,
     this.backgroundColor = const Color(0xFFFAFAFA),
   }) : super(key: key);
 
@@ -62,7 +63,7 @@ class _ContactorViewState extends State<ContactorView> {
     });
     _letters.forEach((element) {
       List<ContactorDataListData> codeList = _dataList
-          .where((e) => e.groupCode.startsWith(element.toLowerCase()))
+          .where((e) => (e.pinyin ?? '').startsWith(element.toLowerCase()))
           .toList();
       ContactorCodeData codeData =
           ContactorCodeData(listData: codeList, name: element);
@@ -98,6 +99,7 @@ class _ContactorViewState extends State<ContactorView> {
                     MaterialPageRoute(
                         builder: (context) => ContactorSearchView(
                               listData: _dataList,
+                              showGroupCode: widget.showGroupCode,
                               onSelectedData: widget.onSelectedData,
                             ),
                         fullscreenDialog: true),
@@ -131,6 +133,7 @@ class _ContactorViewState extends State<ContactorView> {
                         },
                         header: headerItem(index),
                         content: ContactorListView(
+                          showGroupCode: widget.showGroupCode,
                           shrinkWrap: true,
                           scrollEnabled: false,
                           dataList: data![index].listData,
@@ -191,9 +194,9 @@ class _ContactorViewState extends State<ContactorView> {
                 ),
                 onPressed: () {
                   var height = index * 45.0;
-                  for (int i = 0; i < index; i++) {
-                    height += data![i].listData.length * 46.0;
-                  }
+                  (data??[]).getRange(0, index).toList().forEach((element) {
+                    height += element.listData.length * 46.0;
+                  });
                   _controller.jumpTo(height);
                   _currentIndex = index;
                   setState(() {});

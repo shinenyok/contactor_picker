@@ -14,11 +14,15 @@ class ContactorSearchView extends StatefulWidget {
   final List<ContactorDataListData> listData;
   final Function(ContactorDataListData) onSelectedData;
   final Color backgroundColor;
+  final bool? showGroupCode;
+  final bool? onlyShowSearch;
 
   ContactorSearchView({
     Key? key,
     required this.listData,
     required this.onSelectedData,
+    this.showGroupCode,
+    this.onlyShowSearch,
     this.backgroundColor = const Color(0xFFFAFAFA),
   }) : super(key: key);
 
@@ -33,6 +37,7 @@ class _ContactorSearchViewState extends State<ContactorSearchView> {
   @override
   void initState() {
     super.initState();
+    _focusNode.requestFocus();
   }
 
   @override
@@ -82,13 +87,17 @@ class _ContactorSearchViewState extends State<ContactorSearchView> {
               ),
               Expanded(
                 child: ContactorListView(
+                    showGroupCode: widget.showGroupCode,
                     dataList: data,
                     onSelectedData: (item) {
                       _focusNode.unfocus();
-                      print('888q99w88q8w8w98---${item.name}');
                       var count = 0;
+                      num pages = widget.onlyShowSearch == true ? 1 : 2;
                       widget.onSelectedData(item);
-                      Navigator.popUntil(context, (route) => count++ == 2);
+                      Navigator.popUntil(
+                        context,
+                        (route) => count++ == pages,
+                      );
                     }),
               )
             ],

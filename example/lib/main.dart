@@ -1,8 +1,5 @@
 import 'package:contactor_picker_example/data_util.dart';
 import 'package:flutter/material.dart';
-import 'dart:async';
-
-import 'package:flutter/services.dart';
 import 'package:contactor_picker/contactor_picker.dart';
 
 void main() {
@@ -15,7 +12,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
   @override
   void initState() {
     super.initState();
@@ -37,6 +33,7 @@ class _MyAppState extends State<MyApp> {
               onPressed: () {
                 ContactorPicker.showPicker(
                   context,
+                  showGroupCode: true,
                   dataList: DataUtil.dataList.map((element) {
                     String pinyin = PinyinHelper.getPinyinE(element['name'],
                         separator: " ",
@@ -45,8 +42,9 @@ class _MyAppState extends State<MyApp> {
                     return ContactorDataListData(
                       name: element['name'],
                       id: int.tryParse(element['zip']),
-                      groupCode: pinyin,
-                      code: element['label']
+                      pinyin: pinyin,
+                      code: element['label'],
+                      groupCode: element['zip'],
                     );
                   }).toList(),
                   title: '地址簿',
@@ -60,6 +58,34 @@ class _MyAppState extends State<MyApp> {
                 );
               },
               child: Text('地址簿'),
+            ),
+            TextButton(
+              onPressed: () {
+                ContactorPicker.showSearchPicker(
+                  context,
+                  showGroupCode: true,
+                  dataList: DataUtil.dataList.map((element) {
+                    String pinyin = PinyinHelper.getPinyinE(element['name'],
+                        separator: " ",
+                        defPinyin: '#',
+                        format: PinyinFormat.WITHOUT_TONE);
+                    return ContactorDataListData(
+                      name: element['name'],
+                      id: int.tryParse(element['zip']),
+                      pinyin: pinyin,
+                      code: element['label'],
+                      groupCode: element['zip'],
+                    );
+                  }).toList(),
+                  backgroundColor: Color(0xFFFAFAFA),
+                  onSelectedData: (data) {
+                    print(data.toJson());
+                    _currentData = data.toJson().toString();
+                    setState(() {});
+                  },
+                );
+              },
+              child: Text('搜索'),
             ),
             Container(
               padding: EdgeInsets.symmetric(horizontal: 30),

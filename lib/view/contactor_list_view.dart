@@ -12,14 +12,16 @@ class ContactorListView extends StatelessWidget {
   final Function(ContactorDataListData) onSelectedData;
   final bool shrinkWrap;
   final bool scrollEnabled;
+  final bool? showGroupCode;
 
-  const ContactorListView({
-    Key? key,
-    required this.dataList,
-    required this.onSelectedData,
-    this.shrinkWrap = false,
-    this.scrollEnabled = true,
-  }) : super(key: key);
+  const ContactorListView(
+      {Key? key,
+      required this.dataList,
+      required this.onSelectedData,
+      this.shrinkWrap = false,
+      this.scrollEnabled = true,
+      this.showGroupCode})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -44,12 +46,16 @@ class ContactorListView extends StatelessWidget {
                       ),
                     ),
                     SizedBox(width: 10),
-                    Text(
-                      "${dataList[index].groupCode}",
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Color(0xffD6D6D6),
-                      ),
+                    Expanded(
+                      child: showGroupCode == true
+                          ? Text(
+                              "${dataList[index].groupCode}",
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Color(0xffD6D6D6),
+                              ),
+                            )
+                          : SizedBox.shrink(),
                     )
                   ],
                 ),

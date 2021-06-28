@@ -1,6 +1,6 @@
 name: contactor_picker
 description: A Flutter plugin to provide a form like a contact selector.Writted with pure dart, supported both iOS and Android...
-version: 0.0.3
+version: 0.0.4
 homepage: https://github.com/shinenyok/contactor_picker
 repository: https://github.com/shinenyok/contactor_picker
 

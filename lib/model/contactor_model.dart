@@ -31,12 +31,13 @@ class ContactorCodeData {
 class ContactorDataListData {
   int? id;
   String? code;
+  String? pinyin = '';
   String name = '';
   String groupCode = '';
-
   ContactorDataListData({
     this.id,
     this.code,
+    this.pinyin,
     required this.name,
     required this.groupCode,
   });
@@ -45,6 +46,7 @@ class ContactorDataListData {
     code = json['code'];
     name = json['name'];
     id = json['id'];
+    pinyin = json['pinyin'];
     groupCode = json['groupCode'];
   }
 
@@ -53,6 +55,7 @@ class ContactorDataListData {
     data['code'] = this.code;
     data['name'] = this.name;
     data['id'] = this.id;
+    data['pinyin'] = this.pinyin;
     data['groupCode'] = this.groupCode;
     return data;
   }
