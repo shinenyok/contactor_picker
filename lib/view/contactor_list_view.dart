@@ -7,11 +7,21 @@
 import 'package:contactor_picker/model/contactor_model.dart';
 import 'package:flutter/material.dart';
 
+///列表widget
 class ContactorListView extends StatelessWidget {
+  ///数据源列表
   final List<ContactorDataListData> dataList;
+
+  ///选中回调
   final Function(ContactorDataListData) onSelectedData;
+
+  /// If the [shrinkWrap] argument is true, the [center] argument must be null.
   final bool shrinkWrap;
+
+  ///是否可滑动
   final bool scrollEnabled;
+
+  ///是否显示副标题
   final bool? showGroupCode;
 
   const ContactorListView(
@@ -26,28 +36,47 @@ class ContactorListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 0),
+      itemCount: dataList.length,
+      shrinkWrap: shrinkWrap,
+      physics: scrollEnabled ? null : NeverScrollableScrollPhysics(),
+      padding: EdgeInsets.only(left: 16, top: 0, bottom: 0),
       itemBuilder: (BuildContext context, int index) {
-        return Column(
-          children: [
-            Container(
-              height: 45,
-              child: TextButton(
-                onPressed: () {
-                  onSelectedData.call(dataList[index]);
-                },
-                child: Row(
-                  children: <Widget>[
-                    Text(
-                      "${dataList[index].name}",
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Color(0xff434343),
-                      ),
+        return Container(
+          alignment: Alignment.centerLeft,
+          height: 46,
+          child: TextButton.icon(
+            style: ButtonStyle(
+              padding: MaterialStateProperty.all(EdgeInsets.zero),
+            ),
+            onPressed: () {
+              onSelectedData.call(dataList[index]);
+            },
+            icon: dataList[index].headerImageUrl == null
+                ? SizedBox.shrink()
+                : ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: Image.network(
+                      dataList[index].headerImageUrl!,
+                      width: 40,
+                      height: 40,
                     ),
-                    SizedBox(width: 10),
-                    Expanded(
-                      child: showGroupCode == true
+                  ),
+            label: Expanded(
+              child: Column(
+                children: [
+                  Spacer(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        "${dataList[index].name}",
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Color(0xff434343),
+                        ),
+                      ),
+                      SizedBox(width: 10),
+                      showGroupCode == true
                           ? Text(
                               "${dataList[index].groupCode}",
                               style: TextStyle(
@@ -56,20 +85,18 @@ class ContactorListView extends StatelessWidget {
                               ),
                             )
                           : SizedBox.shrink(),
-                    )
-                  ],
-                ),
+                    ],
+                  ),
+                  Spacer(),
+                  Divider(
+                    height: 1,
+                  )
+                ],
               ),
             ),
-            Divider(
-              height: 1,
-            ),
-          ],
+          ),
         );
       },
-      itemCount: dataList.length,
-      shrinkWrap: shrinkWrap,
-      physics: scrollEnabled ? null : NeverScrollableScrollPhysics(),
     );
   }
 }

@@ -1,3 +1,3 @@
-## 0.0.4
+## 0.0.5
 
-* provide only search view and add more style to adjust
+* 优化字母切换显示以及可添加显示头像

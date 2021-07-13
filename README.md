@@ -3,8 +3,19 @@
 联系人选择器
 
 ## Getting Started
-
+#### 1 Add [contactor_picker] latest version under dependencies to your package's pubspec.yaml file. 
 ```
+dependencies:
+  contactor_picker: ^0.0.5
+```
+#### 2 You can install packages from the command line: 
+```
+$ flutter packages get
+```
+#### 3 Api Usage 
+* Usage
+```
+///列表加搜索
 ContactorPicker.showPicker(
                     context,
                     ///数据源
@@ -23,7 +34,6 @@ ContactorPicker.showPicker(
                     letterSelectedColor: Colors.blueAccent,
                   );
 ```
-
 ```
 ///仅搜索
    ContactorPicker.showSearchPicker(

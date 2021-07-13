@@ -7,12 +7,25 @@
 import 'package:flutter/material.dart';
 
 class SearchBarView extends StatelessWidget {
+  ///点击searchbar回调
   final Function? onTap;
+
+  ///输入框提示文字
   final String? placeholder;
+
+  ///输入框提示颜色
   final Color? placeholderColor;
+
+  ///输入框是否只读
   final bool readOnly;
+
+  ///输入框聚焦模式
   final FocusNode? focusNode;
+
+  ///输入框输入内容
   final Function(String)? onChanged;
+
+  ///间距
   final EdgeInsets? padding;
 
   const SearchBarView({

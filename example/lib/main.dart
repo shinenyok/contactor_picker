@@ -43,12 +43,13 @@ class _MyAppState extends State<MyApp> {
                       name: element['name'],
                       id: int.tryParse(element['zip']),
                       pinyin: pinyin,
+                      headerImageUrl: 'https://picsum.photos/250?image=9',
                       code: element['label'],
                       groupCode: element['zip'],
                     );
                   }).toList(),
                   title: '地址簿',
-                  backgroundColor: Color(0xFFFAFAFA),
+                  // backgroundColor: Color(0xFFFAFAFA),
                   letterSelectedColor: Colors.blueAccent,
                   onSelectedData: (data) {
                     print(data.toJson());

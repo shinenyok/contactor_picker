@@ -4,23 +4,34 @@
  * @description: flutter
  */
 
+import 'dart:math';
 import 'package:contactor_picker/model/contactor_model.dart';
 import 'package:flutter/material.dart';
 import 'package:lpinyin/lpinyin.dart';
-import 'package:sticky_headers/sticky_headers.dart';
-import 'package:visibility_detector/visibility_detector.dart';
-
 import 'contactor_list_view.dart';
 import 'contactor_search_view.dart';
 import 'search_bar_view.dart';
 
+///带分类标签的列表widget
 class ContactorView extends StatefulWidget {
+  ///选中回调
   final Function(ContactorDataListData) onSelectedData;
+
+  ///数据源
   final List<ContactorDataListData> dataList;
+
+  ///标题
   final String title;
+
+  ///字母表选中色
   final Color? letterSelectedColor;
+
+  ///背景色
   final Color backgroundColor;
+
+  ///是否显示副标题
   final bool? showGroupCode;
+
   const ContactorView({
     Key? key,
     required this.onSelectedData,
@@ -36,17 +47,46 @@ class ContactorView extends StatefulWidget {
 }
 
 class _ContactorViewState extends State<ContactorView> {
+  ///将数据源封装成按字母分类分类数据源
   List<ContactorCodeData>? data = [];
+
+  ///数据源
   List<ContactorDataListData> _dataList = [];
+
+  ///滑动controller
   ScrollController _controller = ScrollController();
-  int? _currentIndex;
+
+  ///当前显示字母index
+  int _currentIndex = 0;
+
+  ///字母表
   List<String> _letters = [];
-  double _offset = 1.0;
+
+  ///字母在列表上偏移量位置map
+  Map<String, double> _letterOffsetMap = {};
+
+  ///偏移量列表
+  List<double> _offsetList = [];
 
   @override
   void initState() {
     super.initState();
     configData();
+    _controller.addListener(() {
+      double offset = _controller.offset;
+      double element =
+          _offsetList.firstWhere((element) => element >= offset, orElse: () {
+        return offset;
+      });
+      if (_offsetList.indexOf(element) == 0) {
+        _currentIndex = 0;
+      } else if (element > _offsetList.last) {
+        _currentIndex = _offsetList.length - 1;
+      } else {
+        _currentIndex = _offsetList.indexOf(element) - 1;
+      }
+      setState(() {});
+    });
   }
 
   void configData() {
@@ -61,6 +101,8 @@ class _ContactorViewState extends State<ContactorView> {
     _letters.sort((a, b) {
       return a.compareTo(b);
     });
+    double _offset = 0.0;
+    _letterOffsetMap.putIfAbsent(_letters.first, () => _offset);
     _letters.forEach((element) {
       List<ContactorDataListData> codeList = _dataList
           .where((e) => (e.pinyin ?? '').startsWith(element.toLowerCase()))
@@ -70,8 +112,13 @@ class _ContactorViewState extends State<ContactorView> {
       if (codeList.isNotEmpty) {
         data!.add(codeData);
       }
-      if (mounted) setState(() {});
+      int index = _letters.indexOf(element) + 1;
+      if (index < _letters.length) {
+        _offset = _offset + (1 + codeList.length) * 46.0;
+        _letterOffsetMap.putIfAbsent(_letters.elementAt(index), () => _offset);
+      }
     });
+    _offsetList = _letterOffsetMap.values.toList();
   }
 
   @override
@@ -107,44 +154,55 @@ class _ContactorViewState extends State<ContactorView> {
                 },
               ),
               Expanded(
-                child: ListView.builder(
-                  itemCount: data!.length,
+                child: CustomScrollView(
                   controller: _controller,
-                  itemBuilder: (BuildContext context, int index) {
-                    return VisibilityDetector(
-                      key: Key(index.toString()),
-                      onVisibilityChanged: (VisibilityInfo info) {
-                        if (!mounted) {
-                          return;
-                        }
-                        if (_offset == 1.0) {
-                          return;
-                        }
-                        setState(() {
-                          _currentIndex = index;
-                        });
-                      },
-                      child: StickyHeader(
-                        callback: (offsets) {
-                          if (!mounted) {
-                            return;
-                          }
-                          _offset = offsets;
-                        },
-                        header: headerItem(index),
-                        content: ContactorListView(
-                          showGroupCode: widget.showGroupCode,
-                          shrinkWrap: true,
-                          scrollEnabled: false,
-                          dataList: data![index].listData,
-                          onSelectedData: (data) {
-                            widget.onSelectedData(data);
-                            Navigator.pop(context);
-                          },
+                  slivers: [
+                    SliverPersistentHeader(
+                      pinned: true, //是否固定在顶部
+                      delegate: _SliverAppBarDelegate(
+                        minHeight: 30, //收起的高度
+                        maxHeight: 30, //展开的最大高度
+                        child: Container(
+                          color: widget.backgroundColor,
+                          padding: EdgeInsets.only(left: 16),
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            _letters[_currentIndex],
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: widget.letterSelectedColor ??
+                                  Colors.blueAccent,
+                            ),
+                          ),
                         ),
                       ),
-                    );
-                  },
+                    ),
+                    SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                        (BuildContext context, int index) {
+                          //创建列表项
+                          return Column(
+                            children: [
+                              index == 0
+                                  ? SizedBox.shrink()
+                                  : headerItem(index),
+                              ContactorListView(
+                                showGroupCode: widget.showGroupCode,
+                                shrinkWrap: true,
+                                scrollEnabled: false,
+                                dataList: data![index].listData,
+                                onSelectedData: (data) {
+                                  widget.onSelectedData(data);
+                                  Navigator.pop(context);
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                        childCount: data!.length, //50个列表项
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
@@ -161,8 +219,8 @@ class _ContactorViewState extends State<ContactorView> {
   ///字母header
   Widget headerItem(int index) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 0),
-      height: 45,
+      padding: EdgeInsets.only(left: 16),
+      height: 46,
       color: widget.backgroundColor,
       alignment: Alignment.centerLeft,
       child: Text(
@@ -193,11 +251,8 @@ class _ContactorViewState extends State<ContactorView> {
                   padding: MaterialStateProperty.all(EdgeInsets.zero),
                 ),
                 onPressed: () {
-                  var height = index * 45.0;
-                  (data??[]).getRange(0, index).toList().forEach((element) {
-                    height += element.listData.length * 46.0;
-                  });
-                  _controller.jumpTo(height);
+                  double? height = _letterOffsetMap[data![index].name];
+                  _controller.jumpTo(height ?? 0);
                   _currentIndex = index;
                   setState(() {});
                 },
@@ -215,5 +270,36 @@ class _ContactorViewState extends State<ContactorView> {
         ).toList(),
       ),
     );
+  }
+}
+
+class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
+  _SliverAppBarDelegate({
+    required this.minHeight,
+    required this.maxHeight,
+    required this.child,
+  });
+
+  final double minHeight;
+  final double maxHeight;
+  final Widget child;
+
+  @override
+  double get minExtent => minHeight;
+
+  @override
+  double get maxExtent => max(maxHeight, minHeight);
+
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return new SizedBox.expand(child: child);
+  }
+
+  @override
+  bool shouldRebuild(_SliverAppBarDelegate oldDelegate) {
+    return maxHeight != oldDelegate.maxHeight ||
+        minHeight != oldDelegate.minHeight ||
+        child != oldDelegate.child;
   }
 }

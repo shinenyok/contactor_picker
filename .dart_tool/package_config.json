@@ -98,12 +98,6 @@
       "languageVersion": "2.12"
     },
     {
-      "name": "sticky_headers",
-      "rootUri": "file:///Users/admin/.pub-cache/hosted/pub.flutter-io.cn/sticky_headers-0.2.0",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
       "name": "stream_channel",
       "rootUri": "file:///Users/admin/.pub-cache/hosted/pub.flutter-io.cn/stream_channel-2.1.0",
       "packageUri": "lib/",
@@ -140,19 +134,13 @@
       "languageVersion": "2.12"
     },
     {
-      "name": "visibility_detector",
-      "rootUri": "file:///Users/admin/.pub-cache/hosted/pub.flutter-io.cn/visibility_detector-0.2.0",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
       "name": "contactor_picker",
       "rootUri": "../",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     }
   ],
-  "generated": "2021-06-26T05:24:06.274087Z",
+  "generated": "2021-07-13T06:06:29.106867Z",
   "generator": "pub",
   "generatorVersion": "2.13.1"
 }

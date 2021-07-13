@@ -6,15 +6,24 @@
 
 import 'package:contactor_picker/model/contactor_model.dart';
 import 'package:flutter/material.dart';
-
 import 'contactor_list_view.dart';
 import 'search_bar_view.dart';
 
+///搜索列表widget
 class ContactorSearchView extends StatefulWidget {
+  ///数据源
   final List<ContactorDataListData> listData;
+
+  ///选中回调
   final Function(ContactorDataListData) onSelectedData;
+
+  ///背景色
   final Color backgroundColor;
+
+  ///是否显示副标题
   final bool? showGroupCode;
+
+  ///是否仅搜索 若是则返回一级界面 否则返回两级界面
   final bool? onlyShowSearch;
 
   ContactorSearchView({
@@ -87,18 +96,19 @@ class _ContactorSearchViewState extends State<ContactorSearchView> {
               ),
               Expanded(
                 child: ContactorListView(
-                    showGroupCode: widget.showGroupCode,
-                    dataList: data,
-                    onSelectedData: (item) {
-                      _focusNode.unfocus();
-                      var count = 0;
-                      num pages = widget.onlyShowSearch == true ? 1 : 2;
-                      widget.onSelectedData(item);
-                      Navigator.popUntil(
-                        context,
-                        (route) => count++ == pages,
-                      );
-                    }),
+                  showGroupCode: widget.showGroupCode,
+                  dataList: data,
+                  onSelectedData: (item) {
+                    _focusNode.unfocus();
+                    var count = 0;
+                    num pages = widget.onlyShowSearch == true ? 1 : 2;
+                    widget.onSelectedData(item);
+                    Navigator.popUntil(
+                      context,
+                      (route) => count++ == pages,
+                    );
+                  },
+                ),
               )
             ],
           ),

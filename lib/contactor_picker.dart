@@ -9,15 +9,28 @@ export 'package:contactor_picker/view/contactor_view.dart';
 export 'package:contactor_picker/view/contactor_search_view.dart';
 export 'package:contactor_picker/model/contactor_model.dart';
 export 'package:lpinyin/lpinyin.dart';
+
 ///通讯录+搜索
 class ContactorPicker {
   static showPicker(
     BuildContext context, {
+
+    ///标题
     String? title,
+
+    ///背景色
     Color? backgroundColor,
+
+    ///字母选中颜色
     Color? letterSelectedColor,
+
+    ///副标题是否显示
     bool? showGroupCode,
+
+    ///数据源
     required List<ContactorDataListData> dataList,
+
+    ///数据选中回调
     required Function(ContactorDataListData) onSelectedData,
   }) {
     Navigator.push(
@@ -36,14 +49,23 @@ class ContactorPicker {
       ),
     );
   }
-///仅搜索
+
+  ///仅搜索
   static showSearchPicker(
-      BuildContext context, {
-        Color? backgroundColor,
-        bool? showGroupCode,
-        required List<ContactorDataListData> dataList,
-        required Function(ContactorDataListData) onSelectedData,
-      }) {
+    BuildContext context, {
+
+    ///背景色
+    Color? backgroundColor,
+
+    ///是否显示副标题
+    bool? showGroupCode,
+
+    ///数据源
+    required List<ContactorDataListData> dataList,
+
+    ///选中回调
+    required Function(ContactorDataListData) onSelectedData,
+  }) {
     Navigator.push(
       context,
       MaterialPageRoute(

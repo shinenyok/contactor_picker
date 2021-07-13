@@ -4,8 +4,12 @@
  * @description: flutter
  */
 
+///数据模型
 class ContactorCodeData {
+  ///分类数组
   List<ContactorDataListData> listData = [];
+
+  ///分类标签
   String name = '';
 
   ContactorCodeData({required this.listData, required this.name});
@@ -29,15 +33,29 @@ class ContactorCodeData {
 }
 
 class ContactorDataListData {
+  ///id
   int? id;
+
+  ///code
   String? code;
+
+  ///拼音
   String? pinyin = '';
+
+  ///标题内容
   String name = '';
-  String groupCode = '';
+
+  ///附加标题
+  String? groupCode = '';
+
+  ///头像链接 有则预留位置显示头像 否则不显示
+  String? headerImageUrl = '';
+
   ContactorDataListData({
     this.id,
     this.code,
     this.pinyin,
+    this.headerImageUrl,
     required this.name,
     required this.groupCode,
   });
@@ -48,6 +66,7 @@ class ContactorDataListData {
     id = json['id'];
     pinyin = json['pinyin'];
     groupCode = json['groupCode'];
+    headerImageUrl = json['headerImageUrl'];
   }
 
   Map<String, dynamic> toJson() {
@@ -57,6 +76,7 @@ class ContactorDataListData {
     data['id'] = this.id;
     data['pinyin'] = this.pinyin;
     data['groupCode'] = this.groupCode;
+    data['headerImageUrl'] = this.headerImageUrl;
     return data;
   }
 }
