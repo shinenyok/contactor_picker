@@ -32,6 +32,9 @@ class ContactorView extends StatefulWidget {
   ///是否显示副标题
   final bool? showGroupCode;
 
+  ///是否可以返回
+  final bool canPop;
+
   const ContactorView({
     Key? key,
     required this.onSelectedData,
@@ -40,6 +43,7 @@ class ContactorView extends StatefulWidget {
     this.letterSelectedColor,
     this.showGroupCode,
     this.backgroundColor = const Color(0xFFFAFAFA),
+    this.canPop = true,
   }) : super(key: key);
 
   @override
@@ -124,10 +128,12 @@ class _ContactorViewState extends State<ContactorView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-        centerTitle: true,
-      ),
+      appBar: widget.canPop
+          ? AppBar(
+              title: Text(widget.title),
+              centerTitle: true,
+            )
+          : null,
       backgroundColor: widget.backgroundColor,
       resizeToAvoidBottomInset: false,
       body: Stack(
@@ -144,12 +150,14 @@ class _ContactorViewState extends State<ContactorView> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => ContactorSearchView(
-                              listData: _dataList,
-                              showGroupCode: widget.showGroupCode,
-                              onSelectedData: widget.onSelectedData,
-                            ),
-                        fullscreenDialog: true),
+                      builder: (context) => ContactorSearchView(
+                        listData: _dataList,
+                        showGroupCode: widget.showGroupCode,
+                        onSelectedData: widget.onSelectedData,
+                        onlyShowSearch: !widget.canPop,
+                      ),
+                      fullscreenDialog: true,
+                    ),
                   );
                 },
               ),
@@ -193,7 +201,9 @@ class _ContactorViewState extends State<ContactorView> {
                                 dataList: data![index].listData,
                                 onSelectedData: (data) {
                                   widget.onSelectedData(data);
-                                  Navigator.pop(context);
+                                  if (widget.canPop) {
+                                    Navigator.pop(context);
+                                  }
                                 },
                               ),
                             ],

@@ -25,76 +25,96 @@ class _MyAppState extends State<MyApp> {
       appBar: AppBar(
         title: const Text('Plugin example app'),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextButton(
-              onPressed: () {
-                ContactorPicker.showPicker(
-                  context,
-                  showGroupCode: true,
-                  dataList: DataUtil.dataList.map((element) {
-                    String pinyin = PinyinHelper.getPinyinE(element['name'],
-                        separator: " ",
-                        defPinyin: '#',
-                        format: PinyinFormat.WITHOUT_TONE);
-                    return ContactorDataListData(
-                      name: element['name'],
-                      id: int.tryParse(element['zip']),
-                      pinyin: pinyin,
-                      headerImageUrl: 'https://picsum.photos/250?image=9',
-                      code: element['label'],
-                      groupCode: element['zip'],
-                    );
-                  }).toList(),
-                  title: '地址簿',
-                  // backgroundColor: Color(0xFFFAFAFA),
-                  letterSelectedColor: Colors.blueAccent,
-                  onSelectedData: (data) {
-                    print(data.toJson());
-                    _currentData = data.toJson().toString();
-                    setState(() {});
-                  },
-                );
-              },
-              child: Text('地址簿'),
-            ),
-            TextButton(
-              onPressed: () {
-                ContactorPicker.showSearchPicker(
-                  context,
-                  showGroupCode: true,
-                  dataList: DataUtil.dataList.map((element) {
-                    String pinyin = PinyinHelper.getPinyinE(element['name'],
-                        separator: " ",
-                        defPinyin: '#',
-                        format: PinyinFormat.WITHOUT_TONE);
-                    return ContactorDataListData(
-                      name: element['name'],
-                      id: int.tryParse(element['zip']),
-                      pinyin: pinyin,
-                      code: element['label'],
-                      groupCode: element['zip'],
-                    );
-                  }).toList(),
-                  backgroundColor: Color(0xFFFAFAFA),
-                  onSelectedData: (data) {
-                    print(data.toJson());
-                    _currentData = data.toJson().toString();
-                    setState(() {});
-                  },
-                );
-              },
-              child: Text('搜索'),
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 30),
-              child: Text('currentData: $_currentData\n'),
-            ),
-          ],
-        ),
+      body: ContactorView(
+        dataList: DataUtil.dataList.map((element) {
+          String pinyin = PinyinHelper.getPinyinE(element['name'],
+              separator: " ",
+              defPinyin: '#',
+              format: PinyinFormat.WITHOUT_TONE);
+          return ContactorDataListData(
+            name: element['name'],
+            id: int.tryParse(element['zip']),
+            pinyin: pinyin,
+            headerImageUrl: 'https://picsum.photos/250?image=9',
+            code: element['label'],
+            groupCode: element['zip'],
+          );
+        }).toList(),
+        canPop: false,
+        onSelectedData: (ContactorDataListData data) {
+          print('${data.toString()}');
+        },
       ),
+      // body: Center(
+      //   child: Column(
+      //     mainAxisAlignment: MainAxisAlignment.center,
+      //     children: [
+      //       TextButton(
+      //         onPressed: () {
+      //           ContactorPicker.showPicker(
+      //             context,
+      //             showGroupCode: true,
+      //             dataList: DataUtil.dataList.map((element) {
+      //               String pinyin = PinyinHelper.getPinyinE(element['name'],
+      //                   separator: " ",
+      //                   defPinyin: '#',
+      //                   format: PinyinFormat.WITHOUT_TONE);
+      //               return ContactorDataListData(
+      //                 name: element['name'],
+      //                 id: int.tryParse(element['zip']),
+      //                 pinyin: pinyin,
+      //                 headerImageUrl: 'https://picsum.photos/250?image=9',
+      //                 code: element['label'],
+      //                 groupCode: element['zip'],
+      //               );
+      //             }).toList(),
+      //             title: '地址簿',
+      //             // backgroundColor: Color(0xFFFAFAFA),
+      //             letterSelectedColor: Colors.blueAccent,
+      //             onSelectedData: (data) {
+      //               print(data.toJson());
+      //               _currentData = data.toJson().toString();
+      //               setState(() {});
+      //             },
+      //           );
+      //         },
+      //         child: Text('地址簿'),
+      //       ),
+      //       TextButton(
+      //         onPressed: () {
+      //           ContactorPicker.showSearchPicker(
+      //             context,
+      //             showGroupCode: true,
+      //             dataList: DataUtil.dataList.map((element) {
+      //               String pinyin = PinyinHelper.getPinyinE(element['name'],
+      //                   separator: " ",
+      //                   defPinyin: '#',
+      //                   format: PinyinFormat.WITHOUT_TONE);
+      //               return ContactorDataListData(
+      //                 name: element['name'],
+      //                 id: int.tryParse(element['zip']),
+      //                 pinyin: pinyin,
+      //                 code: element['label'],
+      //                 groupCode: element['zip'],
+      //               );
+      //             }).toList(),
+      //             backgroundColor: Color(0xFFFAFAFA),
+      //             onSelectedData: (data) {
+      //               print(data.toJson());
+      //               _currentData = data.toJson().toString();
+      //               setState(() {});
+      //             },
+      //           );
+      //         },
+      //         child: Text('搜索'),
+      //       ),
+      //       Container(
+      //         padding: EdgeInsets.symmetric(horizontal: 30),
+      //         child: Text('currentData: $_currentData\n'),
+      //       ),
+      //     ],
+      //   ),
+      // ),
     );
   }
 }

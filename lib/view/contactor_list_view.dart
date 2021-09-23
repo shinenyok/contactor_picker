@@ -24,14 +24,14 @@ class ContactorListView extends StatelessWidget {
   ///是否显示副标题
   final bool? showGroupCode;
 
-  const ContactorListView(
-      {Key? key,
-      required this.dataList,
-      required this.onSelectedData,
-      this.shrinkWrap = false,
-      this.scrollEnabled = true,
-      this.showGroupCode})
-      : super(key: key);
+  const ContactorListView({
+    Key? key,
+    required this.dataList,
+    required this.onSelectedData,
+    this.shrinkWrap = false,
+    this.scrollEnabled = true,
+    this.showGroupCode,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -61,38 +61,36 @@ class ContactorListView extends StatelessWidget {
                       height: 40,
                     ),
                   ),
-            label: Expanded(
-              child: Column(
-                children: [
-                  Spacer(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        "${dataList[index].name}",
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Color(0xff434343),
-                        ),
+            label: Column(
+              children: [
+                Spacer(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      "${dataList[index].name}",
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Color(0xff434343),
                       ),
-                      SizedBox(width: 10),
-                      showGroupCode == true
-                          ? Text(
-                              "${dataList[index].groupCode}",
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Color(0xffD6D6D6),
-                              ),
-                            )
-                          : SizedBox.shrink(),
-                    ],
-                  ),
-                  Spacer(),
-                  Divider(
-                    height: 1,
-                  )
-                ],
-              ),
+                    ),
+                    SizedBox(width: 10),
+                    showGroupCode == true
+                        ? Text(
+                            "${dataList[index].groupCode}",
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Color(0xffD6D6D6),
+                            ),
+                          )
+                        : SizedBox.shrink(),
+                  ],
+                ),
+                Spacer(),
+                Divider(
+                  height: 1,
+                )
+              ],
             ),
           ),
         );
