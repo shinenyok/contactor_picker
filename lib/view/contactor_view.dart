@@ -24,21 +24,21 @@ class ContactorView extends StatefulWidget {
   final String title;
 
   ///字母表选中色
-  final Color? letterSelectedColor;
+  final Color letterSelectedColor;
 
   ///背景色
   final Color backgroundColor;
 
   ///是否显示副标题
-  final bool? showGroupCode;
+  final bool showGroupCode;
 
   ///是否可以返回
   final bool canPop;
 
   const ContactorView({
-    Key? key,
-    required this.onSelectedData,
-    required this.dataList,
+    Key key,
+    @required this.onSelectedData,
+    @required this.dataList,
     this.title = '选择联系人',
     this.letterSelectedColor,
     this.showGroupCode,
@@ -52,7 +52,7 @@ class ContactorView extends StatefulWidget {
 
 class _ContactorViewState extends State<ContactorView> {
   ///将数据源封装成按字母分类分类数据源
-  List<ContactorCodeData>? data = [];
+  List<ContactorCodeData> data = [];
 
   ///数据源
   List<ContactorDataListData> _dataList = [];
@@ -114,7 +114,7 @@ class _ContactorViewState extends State<ContactorView> {
       ContactorCodeData codeData =
           ContactorCodeData(listData: codeList, name: element);
       if (codeList.isNotEmpty) {
-        data!.add(codeData);
+        data.add(codeData);
       }
       int index = _letters.indexOf(element) + 1;
       if (index < _letters.length) {
@@ -198,7 +198,7 @@ class _ContactorViewState extends State<ContactorView> {
                                 showGroupCode: widget.showGroupCode,
                                 shrinkWrap: true,
                                 scrollEnabled: false,
-                                dataList: data![index].listData,
+                                dataList: data[index].listData,
                                 onSelectedData: (data) {
                                   widget.onSelectedData(data);
                                   if (widget.canPop) {
@@ -209,7 +209,7 @@ class _ContactorViewState extends State<ContactorView> {
                             ],
                           );
                         },
-                        childCount: data!.length, //50个列表项
+                        childCount: data.length, //50个列表项
                       ),
                     ),
                   ],
@@ -234,7 +234,7 @@ class _ContactorViewState extends State<ContactorView> {
       color: widget.backgroundColor,
       alignment: Alignment.centerLeft,
       child: Text(
-        data![index].name.toUpperCase(),
+        data[index].name.toUpperCase(),
         style: TextStyle(
           fontSize: 20,
           color: _currentIndex == index
@@ -261,7 +261,7 @@ class _ContactorViewState extends State<ContactorView> {
                   padding: MaterialStateProperty.all(EdgeInsets.zero),
                 ),
                 onPressed: () {
-                  double? height = _letterOffsetMap[data![index].name];
+                  double height = _letterOffsetMap[data[index].name];
                   _controller.jumpTo(height ?? 0);
                   _currentIndex = index;
                   setState(() {});
@@ -285,9 +285,9 @@ class _ContactorViewState extends State<ContactorView> {
 
 class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   _SliverAppBarDelegate({
-    required this.minHeight,
-    required this.maxHeight,
-    required this.child,
+    @required this.minHeight,
+    @required this.maxHeight,
+    @required this.child,
   });
 
   final double minHeight;

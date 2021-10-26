@@ -16,22 +16,22 @@ class ContactorPicker {
     BuildContext context, {
 
     ///标题
-    String? title,
+    String title,
 
     ///背景色
-    Color? backgroundColor,
+    Color backgroundColor,
 
     ///字母选中颜色
-    Color? letterSelectedColor,
+    Color letterSelectedColor,
 
     ///副标题是否显示
-    bool? showGroupCode,
+    bool showGroupCode,
 
     ///数据源
-    required List<ContactorDataListData> dataList,
+    @required List<ContactorDataListData> dataList,
 
     ///数据选中回调
-    required Function(ContactorDataListData) onSelectedData,
+    @required Function(ContactorDataListData) onSelectedData,
   }) {
     Navigator.push(
       context,
@@ -55,16 +55,16 @@ class ContactorPicker {
     BuildContext context, {
 
     ///背景色
-    Color? backgroundColor,
+    Color backgroundColor,
 
     ///是否显示副标题
-    bool? showGroupCode,
+    bool showGroupCode,
 
     ///数据源
-    required List<ContactorDataListData> dataList,
+    @required List<ContactorDataListData> dataList,
 
     ///选中回调
-    required Function(ContactorDataListData) onSelectedData,
+    @required Function(ContactorDataListData) onSelectedData,
   }) {
     Navigator.push(
       context,

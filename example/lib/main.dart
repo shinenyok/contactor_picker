@@ -15,9 +15,10 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+    print('length----${DataUtil.dataList.length}');
   }
 
-  late String _currentData = '';
+   String _currentData = '';
 
   @override
   Widget build(BuildContext context) {

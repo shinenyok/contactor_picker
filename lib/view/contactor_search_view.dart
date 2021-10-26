@@ -21,15 +21,15 @@ class ContactorSearchView extends StatefulWidget {
   final Color backgroundColor;
 
   ///是否显示副标题
-  final bool? showGroupCode;
+  final bool showGroupCode;
 
   ///是否仅搜索 若是则返回一级界面 否则返回两级界面
-  final bool? onlyShowSearch;
+  final bool onlyShowSearch;
 
   ContactorSearchView({
-    Key? key,
-    required this.listData,
-    required this.onSelectedData,
+    Key key,
+    @required this.listData,
+    @required this.onSelectedData,
     this.showGroupCode,
     this.onlyShowSearch,
     this.backgroundColor = const Color(0xFFFAFAFA),
