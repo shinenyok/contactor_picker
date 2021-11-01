@@ -107,11 +107,11 @@ class _ContactorSearchViewState extends State<ContactorSearchView> {
                     _focusNode.unfocus();
                     var count = 0;
                     num pages = widget.onlyShowSearch == true ? 1 : 2;
-                    widget.onSelectedData(item);
                     Navigator.popUntil(
                       context,
                       (route) => count++ == pages,
                     );
+                    widget.onSelectedData(item);
                   },
                 ),
               )

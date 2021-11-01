@@ -197,17 +197,20 @@ class _ContactorViewState extends State<ContactorView> {
                               index == 0
                                   ? SizedBox.shrink()
                                   : headerItem(index),
-                              ContactorListView(
-                                showGroupCode: widget.showGroupCode,
-                                shrinkWrap: true,
-                                scrollEnabled: false,
-                                dataList: data[index].listData,
-                                onSelectedData: (data) {
-                                  widget.onSelectedData(data);
-                                  if (widget.canPop) {
-                                    Navigator.pop(context);
-                                  }
-                                },
+                              Padding(
+                                padding: const EdgeInsets.only(left: 18),
+                                child: ContactorListView(
+                                  showGroupCode: widget.showGroupCode,
+                                  shrinkWrap: true,
+                                  scrollEnabled: false,
+                                  dataList: data[index].listData,
+                                  onSelectedData: (data) {
+                                    if (widget.canPop) {
+                                      Navigator.pop(context);
+                                    }
+                                    widget.onSelectedData(data);
+                                  },
+                                ),
                               ),
                             ],
                           );
