@@ -15,7 +15,7 @@ import 'search_bar_view.dart';
 ///带分类标签的列表widget
 class ContactorView extends StatefulWidget {
   ///选中回调
-  final Function(ContactorDataListData) onSelectedData;
+  final Function(ContactorDataListData,int) onSelectedData;
 
   ///数据源
   final List<ContactorDataListData> dataList;
@@ -208,7 +208,7 @@ class _ContactorViewState extends State<ContactorView> {
                                     if (widget.canPop) {
                                       Navigator.pop(context);
                                     }
-                                    widget.onSelectedData(data);
+                                    widget.onSelectedData(data,1);
                                   },
                                 ),
                               ),

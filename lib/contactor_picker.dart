@@ -31,7 +31,7 @@ class ContactorPicker {
     @required List<ContactorDataListData> dataList,
 
     ///数据选中回调
-    @required Function(ContactorDataListData) onSelectedData,
+    @required Function(ContactorDataListData,int) onSelectedData,
   }) {
     Navigator.push(
       context,
@@ -64,7 +64,7 @@ class ContactorPicker {
     @required List<ContactorDataListData> dataList,
 
     ///选中回调
-    @required Function(ContactorDataListData) onSelectedData,
+    @required Function(ContactorDataListData,int) onSelectedData,
   }) {
     Navigator.push(
       context,

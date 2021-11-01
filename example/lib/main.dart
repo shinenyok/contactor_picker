@@ -72,7 +72,7 @@ class _MyAppState extends State<MyApp> {
                   title: '地址簿',
                   // backgroundColor: Color(0xFFFAFAFA),
                   letterSelectedColor: Colors.blueAccent,
-                  onSelectedData: (data) {
+                  onSelectedData: (data,pageNum) {
                     print(data.toJson());
                     _currentData = data.toJson().toString();
                     setState(() {});
@@ -100,7 +100,7 @@ class _MyAppState extends State<MyApp> {
                     );
                   }).toList(),
                   backgroundColor: Color(0xFFFAFAFA),
-                  onSelectedData: (data) {
+                  onSelectedData: (data,pageNum) {
                     print(data.toJson());
                     _currentData = data.toJson().toString();
                     setState(() {});

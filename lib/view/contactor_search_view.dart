@@ -15,7 +15,7 @@ class ContactorSearchView extends StatefulWidget {
   final List<ContactorDataListData> listData;
 
   ///选中回调
-  final Function(ContactorDataListData) onSelectedData;
+  final Function(ContactorDataListData,int) onSelectedData;
 
   ///背景色
   final Color backgroundColor;
@@ -113,7 +113,7 @@ class _ContactorSearchViewState extends State<ContactorSearchView> {
                         (route) => count++ == pages,
                       );
                     }
-                    widget.onSelectedData(item);
+                    widget.onSelectedData(item,2);
                   },
                 ),
               )
