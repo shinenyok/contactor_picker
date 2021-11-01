@@ -42,7 +42,7 @@ class SearchBarView extends StatelessWidget {
   OutlineInputBorder get _border => OutlineInputBorder(
         /*边角*/
         borderRadius: BorderRadius.all(
-          Radius.circular(20), //边角为5
+          Radius.circular(6), //边角为5
         ),
         borderSide: BorderSide.none,
       );
@@ -50,7 +50,7 @@ class SearchBarView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 40,
+      height: 30,
       margin: padding,
       child: TextField(
         focusNode: focusNode,

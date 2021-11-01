@@ -41,55 +41,48 @@ class ContactorListView extends StatelessWidget {
       physics: scrollEnabled ? null : NeverScrollableScrollPhysics(),
       padding: EdgeInsets.only(left: 16, top: 0, bottom: 0),
       itemBuilder: (BuildContext context, int index) {
-        return Container(
-          alignment: Alignment.centerLeft,
-          height: 46,
-          child: TextButton.icon(
-            style: ButtonStyle(
-              padding: MaterialStateProperty.all(EdgeInsets.zero),
-            ),
-            onPressed: () {
-              onSelectedData.call(dataList[index]);
-            },
-            icon: dataList[index].headerImageUrl == null
-                ? SizedBox.shrink()
-                : ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    child: Image.network(
-                      dataList[index].headerImageUrl,
-                      width: 40,
-                      height: 40,
-                    ),
-                  ),
-            label: Column(
-              children: [
-                Spacer(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      "${dataList[index].name}",
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Color(0xff434343),
+        return GestureDetector(
+          onTap: () {
+            onSelectedData.call(dataList[index]);
+          },
+          child: Container(
+            alignment: Alignment.centerLeft,
+            height: 46,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                dataList[index].headerImageUrl == null
+                    ? SizedBox.shrink()
+                    : ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: Image.network(
+                          dataList[index].headerImageUrl,
+                          width: 40,
+                          height: 40,
+                        ),
                       ),
-                    ),
-                    SizedBox(width: 10),
-                    showGroupCode == true
-                        ? Text(
-                            "${dataList[index].groupCode}",
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Color(0xffD6D6D6),
-                            ),
-                          )
-                        : SizedBox.shrink(),
-                  ],
+                Text(
+                  "${dataList[index].name}",
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Color(0xFF3F454F),
+                  ),
                 ),
-                Spacer(),
-                Divider(
-                  height: 1,
-                )
+                SizedBox(width: 10),
+                showGroupCode == true
+                    ? Text(
+                        "${dataList[index].groupCode}",
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Color(0xffD6D6D6),
+                        ),
+                      )
+                    : SizedBox.shrink(),
+                Expanded(
+                  child: Container(
+                    color: Colors.transparent,
+                  ),
+                ),
               ],
             ),
           ),

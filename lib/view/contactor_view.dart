@@ -101,16 +101,16 @@ class _ContactorViewState extends State<ContactorView> {
         _letters.add(pinyin[0].toUpperCase());
       }
     });
-    _dataList.addAll(widget.dataList);
     _letters.sort((a, b) {
       return a.compareTo(b);
     });
     double _offset = 0.0;
     _letterOffsetMap.putIfAbsent(_letters.first, () => _offset);
     _letters.forEach((element) {
-      List<ContactorDataListData> codeList = _dataList
+      List<ContactorDataListData> codeList = widget.dataList
           .where((e) => (e.pinyin ?? '').startsWith(element.toLowerCase()))
           .toList();
+      _dataList.addAll(codeList);
       ContactorCodeData codeData =
           ContactorCodeData(listData: codeList, name: element);
       if (codeList.isNotEmpty) {
@@ -130,7 +130,10 @@ class _ContactorViewState extends State<ContactorView> {
     return Scaffold(
       appBar: widget.canPop
           ? AppBar(
-              title: Text(widget.title),
+              title: Text(
+                widget.title,
+                style: TextStyle(fontSize: 17),
+              ),
               centerTitle: true,
             )
           : null,

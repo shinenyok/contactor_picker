@@ -47,6 +47,7 @@ class _ContactorSearchViewState extends State<ContactorSearchView> {
   void initState() {
     super.initState();
     _focusNode.requestFocus();
+    data = widget.listData;
   }
 
   @override
@@ -78,8 +79,12 @@ class _ContactorSearchViewState extends State<ContactorSearchView> {
                                   (element) => element.name.contains(value),
                                 )
                                 .toList();
+                            Iterable pinyinList = widget.listData.where(
+                              (element) => (element.pinyin).contains(value),
+                            );
+                            data.addAll(pinyinList);
                           } else {
-                            data = [];
+                            data = widget.listData;
                           }
                           setState(() {});
                         },
