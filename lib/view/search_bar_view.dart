@@ -56,11 +56,16 @@ class SearchBarView extends StatelessWidget {
         focusNode: focusNode,
         maxLines: 1,
         decoration: InputDecoration(
+          prefixIconConstraints: BoxConstraints(
+            minHeight: 30,
+            minWidth: 30,
+          ),
           prefixIcon: Icon(
             Icons.search,
-            color: placeholderColor ?? Colors.black12,
+            color: placeholderColor ?? Color(0xFFC2C6CC),
+            size: 20,
           ),
-          fillColor: placeholderColor ?? Colors.black12,
+          fillColor: placeholderColor ?? Color(0xFFF2F3F5),
           filled: true,
           isDense: true,
           contentPadding: EdgeInsets.zero,
