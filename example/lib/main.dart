@@ -1,6 +1,7 @@
 import 'package:contactor_picker_example/data_util.dart';
 import 'package:flutter/material.dart';
 import 'package:contactor_picker/contactor_picker.dart';
+import 'package:lpinyin/lpinyin.dart';
 
 void main() {
   runApp(MaterialApp(home: MyApp()));
@@ -18,7 +19,7 @@ class _MyAppState extends State<MyApp> {
     print('length----${DataUtil.dataList.length}');
   }
 
-   String _currentData = '';
+  String _currentData = '';
 
   @override
   Widget build(BuildContext context) {
@@ -70,9 +71,31 @@ class _MyAppState extends State<MyApp> {
                     );
                   }).toList(),
                   title: '地址簿',
+                  extendWidget: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        height: 40,
+                        child: Text('666666'),
+                      ),
+                      Container(
+                        height: 40,
+                        alignment: Alignment.centerLeft,
+                        child: Text('555555'),
+                      ),
+                      Expanded(
+                        child: Container(
+                          height: 40,
+                          alignment: Alignment.centerLeft,
+                          child: Text('888888'),
+                        ),
+                      )
+                    ],
+                  ),
                   // backgroundColor: Color(0xFFFAFAFA),
                   letterSelectedColor: Colors.blueAccent,
-                  onSelectedData: (data,pageNum) {
+                  onSelectedData: (data, pageNum) {
                     print(data.toJson());
                     _currentData = data.toJson().toString();
                     setState(() {});
@@ -100,7 +123,7 @@ class _MyAppState extends State<MyApp> {
                     );
                   }).toList(),
                   backgroundColor: Color(0xFFFAFAFA),
-                  onSelectedData: (data,pageNum) {
+                  onSelectedData: (data, pageNum) {
                     print(data.toJson());
                     _currentData = data.toJson().toString();
                     setState(() {});

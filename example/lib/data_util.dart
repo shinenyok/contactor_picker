@@ -3,7 +3,7 @@
  * @date: 2021/6/26 10:18 上午
  * @description: flutter
  */
-class DataUtil{
+class DataUtil {
   static List dataList = [
     {"label": "北京Beijing010", "name": "北京", "pinyin": "Beijing", "zip": "010"},
     {

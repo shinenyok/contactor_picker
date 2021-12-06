@@ -4,8 +4,6 @@
  * @description: flutter
  */
 
-import 'package:flutter/material.dart';
-
 ///数据模型
 class ContactorCodeData {
   ///分类数组
@@ -14,7 +12,7 @@ class ContactorCodeData {
   ///分类标签
   String name = '';
 
-  ContactorCodeData({@required this.listData, @required this.name});
+  ContactorCodeData({required this.listData, required this.name});
 
   ContactorCodeData.fromJson(Map<String, dynamic> json) {
     if (json['listData'] != null) {
@@ -36,13 +34,13 @@ class ContactorCodeData {
 
 class ContactorDataListData {
   ///id
-  int id;
+  int? id = -1;
 
   ///code
-  String code;
+  String? code = '';
 
   ///拼音
-  String pinyin = '';
+  String? pinyin = '';
 
   ///标题内容
   String name = '';
@@ -51,15 +49,15 @@ class ContactorDataListData {
   String groupCode = '';
 
   ///头像链接 有则预留位置显示头像 否则不显示
-  String headerImageUrl = '';
+  String? headerImageUrl = '';
 
   ContactorDataListData({
     this.id,
     this.code,
     this.pinyin,
     this.headerImageUrl,
-    @required this.name,
-    @required this.groupCode,
+    required this.name,
+    required this.groupCode,
   });
 
   ContactorDataListData.fromJson(Map<String, dynamic> json) {

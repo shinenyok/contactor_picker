@@ -8,7 +8,7 @@ import 'package:contactor_picker/view/contactor_view.dart';
 export 'package:contactor_picker/view/contactor_view.dart';
 export 'package:contactor_picker/view/contactor_search_view.dart';
 export 'package:contactor_picker/model/contactor_model.dart';
-export 'package:lpinyin/lpinyin.dart';
+
 
 ///通讯录+搜索
 class ContactorPicker {
@@ -16,28 +16,30 @@ class ContactorPicker {
     BuildContext context, {
 
     ///标题
-    String title,
+    String? title,
 
     ///背景色
-    Color backgroundColor,
+    Color? backgroundColor,
 
     ///字母选中颜色
-    Color letterSelectedColor,
+    Color? letterSelectedColor,
 
     ///副标题是否显示
-    bool showGroupCode,
+    bool? showGroupCode,
 
+    Widget? extendWidget,
     ///数据源
-    @required List<ContactorDataListData> dataList,
+    required List<ContactorDataListData> dataList,
 
     ///数据选中回调
-    @required Function(ContactorDataListData,int) onSelectedData,
+    required Function(ContactorDataListData,int) onSelectedData,
   }) {
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) {
           return ContactorView(
+            extendWidget: extendWidget,
             showGroupCode: showGroupCode,
             title: title ?? '联系人',
             backgroundColor: backgroundColor ?? Color(0xFFFAFAFA),
@@ -55,16 +57,16 @@ class ContactorPicker {
     BuildContext context, {
 
     ///背景色
-    Color backgroundColor,
+    Color? backgroundColor,
 
     ///是否显示副标题
-    bool showGroupCode,
+    bool? showGroupCode,
 
     ///数据源
-    @required List<ContactorDataListData> dataList,
+    required List<ContactorDataListData> dataList,
 
     ///选中回调
-    @required Function(ContactorDataListData,int) onSelectedData,
+    required Function(ContactorDataListData,int) onSelectedData,
   }) {
     Navigator.push(
       context,

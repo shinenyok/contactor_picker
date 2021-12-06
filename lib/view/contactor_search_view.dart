@@ -15,23 +15,23 @@ class ContactorSearchView extends StatefulWidget {
   final List<ContactorDataListData> listData;
 
   ///选中回调
-  final Function(ContactorDataListData,int) onSelectedData;
+  final Function(ContactorDataListData, int) onSelectedData;
 
   ///背景色
   final Color backgroundColor;
 
   ///是否显示副标题
-  final bool showGroupCode;
+  final bool? showGroupCode;
 
   ///是否仅搜索 若是则返回一级界面 否则返回两级界面
   final bool onlyShowSearch;
 
   ContactorSearchView({
-    Key key,
-    @required this.listData,
-    @required this.onSelectedData,
+    Key? key,
+    required this.listData,
+    required this.onSelectedData,
     this.showGroupCode,
-    this.onlyShowSearch,
+    this.onlyShowSearch = false,
     this.backgroundColor = const Color(0xFFFAFAFA),
   }) : super(key: key);
 
@@ -76,13 +76,10 @@ class _ContactorSearchViewState extends State<ContactorSearchView> {
                           if (value.isNotEmpty) {
                             data = widget.listData
                                 .where(
-                                  (element) => element.name.contains(value),
+                                  (element) => (element.name.contains(value) ||
+                                      (element.pinyin ?? '').contains(value)),
                                 )
                                 .toList();
-                            Iterable pinyinList = widget.listData.where(
-                              (element) => (element.pinyin).contains(value),
-                            );
-                            data.addAll(pinyinList);
                           } else {
                             data = widget.listData;
                           }
@@ -113,7 +110,7 @@ class _ContactorSearchViewState extends State<ContactorSearchView> {
                         (route) => count++ == pages,
                       );
                     }
-                    widget.onSelectedData(item,2);
+                    widget.onSelectedData(item, 2);
                   },
                 ),
               )

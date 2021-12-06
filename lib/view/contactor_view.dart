@@ -5,7 +5,9 @@
  */
 
 import 'dart:math';
+
 import 'package:contactor_picker/model/contactor_model.dart';
+import 'package:contactor_picker/view/item.dart';
 import 'package:flutter/material.dart';
 import 'package:lpinyin/lpinyin.dart';
 import 'contactor_list_view.dart';
@@ -15,7 +17,7 @@ import 'search_bar_view.dart';
 ///带分类标签的列表widget
 class ContactorView extends StatefulWidget {
   ///选中回调
-  final Function(ContactorDataListData,int) onSelectedData;
+  final Function(ContactorDataListData, int) onSelectedData;
 
   ///数据源
   final List<ContactorDataListData> dataList;
@@ -24,21 +26,24 @@ class ContactorView extends StatefulWidget {
   final String title;
 
   ///字母表选中色
-  final Color letterSelectedColor;
+  final Color? letterSelectedColor;
 
   ///背景色
-  final Color backgroundColor;
+  final Color? backgroundColor;
 
   ///是否显示副标题
-  final bool showGroupCode;
+  final bool? showGroupCode;
 
   ///是否可以返回
   final bool canPop;
 
+  final Widget? extendWidget;
+
   const ContactorView({
-    Key key,
-    @required this.onSelectedData,
-    @required this.dataList,
+    Key? key,
+    required this.onSelectedData,
+    required this.dataList,
+    this.extendWidget,
     this.title = '选择联系人',
     this.letterSelectedColor,
     this.showGroupCode,
@@ -96,7 +101,7 @@ class _ContactorViewState extends State<ContactorView> {
   void configData() {
     widget.dataList.forEach((element) {
       String pinyin = PinyinHelper.getPinyinE(element.name,
-          separator: " ", defPinyin: '#', format: PinyinFormat.WITHOUT_TONE);
+          separator: "", defPinyin: '#', format: PinyinFormat.WITHOUT_TONE);
       if (!_letters.contains(pinyin[0].toUpperCase())) {
         _letters.add(pinyin[0].toUpperCase());
       }
@@ -144,7 +149,7 @@ class _ContactorViewState extends State<ContactorView> {
           Column(
             children: [
               SizedBox(
-                height: 10,
+                height: 20,
               ),
               SearchBarView(
                 padding: EdgeInsets.symmetric(horizontal: 20),
@@ -164,61 +169,30 @@ class _ContactorViewState extends State<ContactorView> {
                   );
                 },
               ),
-              Expanded(
-                child: CustomScrollView(
+              Flexible(
+                child: ListView.builder(
                   controller: _controller,
-                  slivers: [
-                    SliverPersistentHeader(
-                      pinned: true, //是否固定在顶部
-                      delegate: _SliverAppBarDelegate(
-                        minHeight: 30, //收起的高度
-                        maxHeight: 30, //展开的最大高度
-                        child: Container(
-                          color: widget.backgroundColor,
-                          padding: EdgeInsets.only(left: 16),
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            _letters[_currentIndex],
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: widget.letterSelectedColor ??
-                                  Colors.blueAccent,
-                            ),
-                          ),
+                  itemBuilder: (context, index) {
+                    return Item(
+                      header: headerItem(index),
+                      content: Padding(
+                        padding: const EdgeInsets.only(left: 18),
+                        child: ContactorListView(
+                          showGroupCode: widget.showGroupCode,
+                          shrinkWrap: true,
+                          scrollEnabled: false,
+                          dataList: data[index].listData,
+                          onSelectedData: (data) {
+                            if (widget.canPop) {
+                              Navigator.pop(context);
+                            }
+                            widget.onSelectedData(data, 1);
+                          },
                         ),
                       ),
-                    ),
-                    SliverList(
-                      delegate: SliverChildBuilderDelegate(
-                        (BuildContext context, int index) {
-                          //创建列表项
-                          return Column(
-                            children: [
-                              index == 0
-                                  ? SizedBox.shrink()
-                                  : headerItem(index),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 18),
-                                child: ContactorListView(
-                                  showGroupCode: widget.showGroupCode,
-                                  shrinkWrap: true,
-                                  scrollEnabled: false,
-                                  dataList: data[index].listData,
-                                  onSelectedData: (data) {
-                                    if (widget.canPop) {
-                                      Navigator.pop(context);
-                                    }
-                                    widget.onSelectedData(data,1);
-                                  },
-                                ),
-                              ),
-                            ],
-                          );
-                        },
-                        childCount: data.length, //50个列表项
-                      ),
-                    ),
-                  ],
+                    );
+                  },
+                  itemCount: data.length,
                 ),
               ),
             ],
@@ -267,8 +241,8 @@ class _ContactorViewState extends State<ContactorView> {
                   padding: MaterialStateProperty.all(EdgeInsets.zero),
                 ),
                 onPressed: () {
-                  double height = _letterOffsetMap[data[index].name];
-                  _controller.jumpTo(height ?? 0);
+                  double height = _letterOffsetMap[data[index].name] ?? 0;
+                  _controller.jumpTo(height);
                   _currentIndex = index;
                   setState(() {});
                 },
@@ -291,9 +265,9 @@ class _ContactorViewState extends State<ContactorView> {
 
 class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   _SliverAppBarDelegate({
-    @required this.minHeight,
-    @required this.maxHeight,
-    @required this.child,
+    required this.minHeight,
+    required this.maxHeight,
+    required this.child,
   });
 
   final double minHeight;

@@ -22,12 +22,12 @@ class ContactorListView extends StatelessWidget {
   final bool scrollEnabled;
 
   ///是否显示副标题
-  final bool showGroupCode;
+  final bool? showGroupCode;
 
   const ContactorListView({
-    Key key,
-    @required this.dataList,
-    @required this.onSelectedData,
+    Key? key,
+    required this.dataList,
+    required this.onSelectedData,
     this.shrinkWrap = false,
     this.scrollEnabled = true,
     this.showGroupCode,
@@ -56,7 +56,7 @@ class ContactorListView extends StatelessWidget {
                     : ClipRRect(
                         borderRadius: BorderRadius.circular(20),
                         child: Image.network(
-                          dataList[index].headerImageUrl,
+                          dataList[index].headerImageUrl ??'',
                           width: 40,
                           height: 40,
                         ),
