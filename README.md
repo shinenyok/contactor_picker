@@ -6,7 +6,7 @@
 #### 1 Add [contactor_picker] latest version under dependencies to your package's pubspec.yaml file. 
 ```
 dependencies:
-  contactor_picker: ^0.0.6
+  contactor_picker: ^0.0.7
 ```
 #### 2 You can install packages from the command line: 
 ```
